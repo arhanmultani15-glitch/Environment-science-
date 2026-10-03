@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Components of Environment – Biotic and Abiotic</title>
+<style>
+:root{--bg:#eef8fb;--ink:#0b3d4a;--mut:#3d6670;--card:#fff;--g:#1f8a4c;--b:#1b78b8;--line:#bfe0ea;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a2128;--ink:#e6f5f8;--mut:#9cc3cc;--card:#10303a;--line:#1f4a57}}
+:root[data-theme="dark"]{--bg:#0a2128;--ink:#e6f5f8;--mut:#9cc3cc;--card:#10303a;--line:#1f4a57}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:1.7rem;line-height:1.2;margin:8px 0 4px}
+.sub{color:var(--mut);margin:0 0 14px}
+.stage{position:relative;aspect-ratio:16/10;min-height:260px;border-radius:14px;overflow:hidden;background:linear-gradient(#bfe6f5,#e9f7e4);border:1px solid var(--line)}
+.scene{position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;opacity:0;visibility:hidden;transition:opacity .6s}
+.scene.on{opacity:1;visibility:visible}
+.scene h2{margin:0 0 8px;font-size:1.5rem;color:#0b3d4a}
+.scene p{margin:0;max-width:520px;color:#2a5560;font-size:.98rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;max-width:520px;margin-top:10px}
+.grid.six{grid-template-columns:repeat(3,1fr)}
+.chip{background:rgba(255,255,255,.88);border-radius:10px;padding:8px 6px;font-size:.85rem;color:#0b3d4a;opacity:0;transform:scale(.6)}
+.chip b{display:block;font-size:1.4rem}
+.on .chip{animation:pop .5s forwards;animation-delay:calc(var(--i)*.45s + .3s)}
+@keyframes pop{to{opacity:1;transform:none}}
+.earth{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4fc3f7,#1b78b8 55%,#0b3d4a);position:relative;overflow:hidden;box-shadow:0 0 30px rgba(31,138,76,.5)}
+.earth::before,.earth::after{content:"";position:absolute;background:#3aa655;border-radius:45% 55% 50% 50%}
+.earth::before{width:55px;height:40px;left:14px;top:26px}
+.earth::after{width:40px;height:50px;right:10px;top:58px}
+.on .earth{animation:spin 8s linear infinite}
+@keyframes spin{to{filter:hue-rotate(20deg);transform:rotate(360deg)}}
+.leaf{font-size:2rem;display:inline-block}
+.on .leaf{animation:sway 2s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+.sun{font-size:2.4rem;display:inline-block}.on .sun{animation:spin2 9s linear infinite}
+@keyframes spin2{to{transform:rotate(360deg)}}
+.cycle{position:relative;width:200px;height:200px;margin:6px auto}
+.cycle span{position:absolute;background:rgba(255,255,255,.9);border-radius:10px;padding:3px 8px;font-size:.8rem}
+.cycle .ring{inset:30px;border:2px dashed #1b78b8;border-radius:50%;background:none;padding:0}
+.on .ring{animation:spin2 12s linear infinite}
+.bar{display:flex;align-items:center;gap:10px;margin:10px 0}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;min-height:44px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.track{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--g)}
+.cap{font-size:.85rem;color:var(--mut);min-width:48px;text-align:right}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 16px 12px;margin:16px 0}
+h3{margin:14px 0 4px}
+.two{display:grid;gap:12px}
+@media(min-width:620px){.two{grid-template-columns:1fr 1fr}}
+dl{margin:0}dt{font-weight:bold;margin-top:8px;color:var(--g)}dd{margin:0;color:var(--mut)}
+.abi dt{color:var(--b)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.foot{text-align:center;color:var(--mut);font-size:.88rem;margin:20px 0}
+
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:8px;overflow-x:auto;padding:8px 0;margin:0 -16px 8px;padding-left:16px;padding-right:16px;background:var(--bg);scrollbar-width:none}
+nav a{flex:none;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:.9rem;min-height:44px;display:flex;align-items:center}
+nav a:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+section{scroll-margin-top:70px}
+.bio{border-left:6px solid var(--g)}.abi{border-left:6px solid var(--b)}
+.facts{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.fact{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:.9rem}
+.fact b{display:block;font-size:1.3rem;color:var(--g)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:.92rem}
+.flow span{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.flow i{font-style:normal;color:var(--mut)}
+details{border-top:1px solid var(--line);padding:10px 0}
+summary{cursor:pointer;font-weight:bold;min-height:44px;display:flex;align-items:center}
+summary:focus-visible{outline:3px solid var(--b)}
+img,svg,table{max-width:100%}
+@media(max-width:520px){main{padding:12px}h1{font-size:1.45rem}.stage{aspect-ratio:auto;height:390px}.scene{padding:12px}.scene h2{font-size:1.2rem}.scene p{font-size:.9rem}.grid.six{grid-template-columns:repeat(2,1fr)}.chip{font-size:.8rem}.facts{grid-template-columns:1fr}.bar{flex-wrap:wrap}.track{flex-basis:100%;order:3}.cap{margin-left:auto}}
+@media (prefers-reduced-motion:reduce){.on .earth,.on .leaf,.on .sun,.on .ring{animation:none}.on .chip{animation-duration:.01s;animation-delay:0s}}
+</style></head><body><main>
+<h1>Components of Environment</h1>
+<p class="sub">Biotic and Abiotic Components · RK University, BCA</p>
+
+<nav aria-label="Sections"><a href="#intro">Introduction</a><a href="#biotic">Biotic</a><a href="#abiotic">Abiotic</a><a href="#cycles">Cycles</a><a href="#threats">Threats</a><a href="#act">What you can do</a><a href="#quiz">Quick check</a></nav>
+<div class="stage" id="stage" aria-label="Animated explainer video">
+ <div class="scene"><div class="earth"></div><h2 style="margin-top:12px">Components of Environment</h2><p>Biotic and abiotic parts of our living planet</p></div>
+ <div class="scene"><span class="leaf">🌿</span><h2>What is the environment?</h2><p>The totality of living and non-living things around us. It gives us the resources we need and supports all life forms.</p></div>
+ <div class="scene"><h2>Biotic: the living parts</h2><div class="grid">
+  <div class="chip" style="--i:0"><b>🌱</b>Plants<br>make food, release oxygen</div>
+  <div class="chip" style="--i:1"><b>🦌</b>Animals<br>food chain, seed dispersal</div>
+  <div class="chip" style="--i:2"><b>🧑‍🤝‍🧑</b>Humans<br>use and protect resources</div>
+  <div class="chip" style="--i:3"><b>🦠</b>Microorganisms<br>decompose, recycle nutrients</div></div></div>
+ <div class="scene"><h2>Abiotic: the non-living parts</h2><div class="grid six">
+  <div class="chip" style="--i:0"><b>💨</b>Air</div>
+  <div class="chip" style="--i:1"><b>💧</b>Water</div>
+  <div class="chip" style="--i:2"><b>🟫</b>Soil</div>
+  <div class="chip" style="--i:3"><b class="sun">☀️</b>Sunlight</div>
+  <div class="chip" style="--i:4"><b>🌡️</b>Temperature</div>
+  <div class="chip" style="--i:5"><b>🪨</b>Minerals</div></div></div>
+ <div class="scene"><h2>Working together</h2><div class="cycle"><span class="ring"></span>
+  <span style="top:0;left:60px">☀️ Sunlight</span><span style="top:85px;right:-6px">🌱 Plants</span><span style="bottom:0;left:55px">🦌 Animals</span><span style="top:85px;left:-6px">🦠 Soil</span></div>
+  <p>Sunlight feeds plants, animals eat plants, microbes return nutrients to the soil.</p></div>
+ <div class="scene"><span class="leaf">🌍</span><h2>Protect it. Secure the future.</h2><p>Balance, resources, biodiversity, climate regulation and sustainable living all depend on every component. Save environment, secure future.</p></div>
+</div>
+<div class="bar"><button id="pp" aria-label="Play or pause">Pause</button><button id="rs">Replay</button><div class="track"><div class="fill" id="fill"></div></div><span class="cap" id="cap">0:00</span></div>
+
+<section id="intro"><h3>Introduction</h3>
+<p>The environment is everything, living and non-living, that surrounds us. It provides the air, water, food and materials we need. Its components fall into two groups, biotic and abiotic, and both work together to keep ecological balance and support life on Earth.</p></section>
+
+<div class="two">
+<section class="bio" id="biotic"><h3>Biotic components</h3><p>The living parts of the environment.</p><dl>
+<dt>Plants</dt><dd>Producers of food, release oxygen, maintain ecological balance.</dd>
+<dt>Animals</dt><dd>Maintain the food chain, help pollination and seed dispersal, keep the ecosystem balanced.</dd>
+<dt>Humans</dt><dd>Use natural resources, are responsible for conservation, shape the environment.</dd>
+<dt>Microorganisms</dt><dd>Decompose dead matter, help nutrient cycling, maintain soil fertility.</dd></dl></section>
+<section class="abi" id="abiotic"><h3>Abiotic components</h3><p>The non-living parts that set the basic conditions for life.</p><dl>
+<dt>Air</dt><dd>Provides oxygen, shapes weather and climate.</dd>
+<dt>Water</dt><dd>Essential for all living beings, regulates temperature.</dd>
+<dt>Soil</dt><dd>Provides nutrients to plants, supports life forms.</dd>
+<dt>Sunlight</dt><dd>Source of energy, drives photosynthesis.</dd>
+<dt>Temperature</dt><dd>Controls life processes, affects climate and weather.</dd>
+<dt>Minerals</dt><dd>Needed for plant and animal growth, found in soil, water and rocks.</dd></dl></section>
+</div>
+
+<section><h3>Biotic vs abiotic</h3><div class="tbl"><table>
+<tr><th></th><th>Biotic</th><th>Abiotic</th></tr>
+<tr><td>Nature</td><td>Living</td><td>Non-living</td></tr>
+<tr><td>Examples</td><td>Plants, animals, humans, microbes</td><td>Air, water, soil, sunlight, temperature, minerals</td></tr>
+<tr><td>Role</td><td>Produce, consume, decompose</td><td>Provide energy and conditions for life</td></tr></table></div></section>
+
+<section id="cycles"><h3>Key facts</h3><div class="facts">
+<div class="fact"><b>~21%</b>of air is oxygen, mostly made by plants and algae</div>
+<div class="fact"><b>~71%</b>of Earth's surface is covered by water</div>
+<div class="fact"><b>Ecosystem</b>a community of living things interacting with its non-living surroundings</div>
+<div class="fact"><b>Biodiversity</b>the variety of life; more variety makes an ecosystem more resilient</div></div>
+
+<h3>Food chain: how energy moves</h3>
+<div class="flow"><span>☀️ Sun</span><i>→</i><span>🌱 Producer</span><i>→</i><span>🐛 Herbivore</span><i>→</i><span>🦊 Carnivore</span><i>→</i><span>🦠 Decomposer</span></div>
+<p>Producers turn sunlight into food. Each level passes on part of that energy. Decomposers return nutrients to the soil, so the cycle starts again.</p>
+
+<h3>Natural cycles that link both groups</h3>
+<details open><summary>Water cycle</summary><p>Sun heats water, which evaporates, forms clouds, and falls as rain. Plants absorb it and animals drink it, and it returns to the air and rivers.</p></details>
+<details><summary>Carbon and oxygen cycle</summary><p>Plants take in carbon dioxide and release oxygen during photosynthesis. Animals, humans and microbes breathe in oxygen and release carbon dioxide.</p></details>
+<details><summary>Nutrient cycle</summary><p>Minerals in soil feed plants. Animals eat plants. When living things die, microorganisms break them down and the minerals return to the soil.</p></details>
+</section>
+
+<section id="threats"><h3>What disturbs the balance?</h3><ul>
+<li><b>Deforestation:</b> fewer plants means less oxygen, less habitat and poorer soil.</li>
+<li><b>Pollution:</b> contaminated air, water and soil harms all living things.</li>
+<li><b>Climate change:</b> shifting temperature and rainfall affect where species can live.</li>
+<li><b>Overuse of resources:</b> water, minerals and fuels are used faster than they renew.</li>
+<li><b>Loss of biodiversity:</b> removing one species can disturb the whole food chain.</li></ul>
+<p>Changing one component affects the others. For example, polluted water harms fish, which harms the animals and humans that depend on them.</p></section>
+
+<section id="act"><h3>What we can do</h3><ul>
+<li>Plant trees and protect green spaces.</li>
+<li>Save water and electricity.</li>
+<li>Reduce, reuse and recycle waste.</li>
+<li>Use public transport, cycling or walking when possible.</li>
+<li>Avoid single-use plastic.</li>
+<li>Spread awareness among friends and family.</li></ul></section>
+
+<section id="quiz"><h3>Quick check</h3>
+<details><summary>1. Is soil biotic or abiotic?</summary><p>Abiotic. Soil itself is non-living, but it supports many living organisms.</p></details>
+<details><summary>2. Which component is the source of energy for ecosystems?</summary><p>Sunlight. It powers photosynthesis in plants.</p></details>
+<details><summary>3. What do microorganisms do?</summary><p>They decompose dead matter, cycle nutrients and keep soil fertile.</p></details>
+<details><summary>4. Why do both groups matter?</summary><p>They are interconnected. Living things need non-living conditions, and living things change those conditions in return.</p></details>
+</section>
+
+<section id="importance"><h3>Importance</h3><ul>
+<li>Maintains ecological balance</li><li>Provides resources for life</li><li>Supports biodiversity</li><li>Helps in climate regulation</li><li>Ensures sustainable living</li></ul>
+<h3>Conclusion</h3>
+<p>Both biotic and abiotic components are essential for life on Earth, are interconnected, and depend on each other. To keep a healthy environment we must protect all its components and use natural resources wisely.</p></section>
+
+<p class="foot"><b>Guided by:</b> Prof. Vivek G. Bhalodiya, Asst. Prof. Civil Engineering<br><b>Prepared by:</b> Section BCA - D<br>Multani Arhan F.<br>Enrollment No. 26FOTCA11113</p>
+</main>
+<script>
+(function(){
+var sc=document.querySelectorAll('.scene'),D=6000,total=sc.length*D,t=0,playing=true,last=performance.now(),cur=-1;
+var fill=document.getElementById('fill'),cap=document.getElementById('cap'),pp=document.getElementById('pp');
+function show(i){if(i===cur)return;cur=i;sc.forEach(function(s,k){s.classList.remove('on');if(k===i){void s.offsetWidth;s.classList.add('on')}})}
+function tick(n){var dt=n-last;last=n;if(playing){t+=dt;if(t>=total)t=0}
+show(Math.min(sc.length-1,Math.floor(t/D)));fill.style.width=(t/total*100)+'%';
+var s=Math.floor(t/1000);cap.textContent=Math.floor(s/60)+':'+('0'+s%60).slice(-2);requestAnimationFrame(tick)}
+pp.onclick=function(){playing=!playing;pp.textContent=playing?'Pause':'Play'};
+document.getElementById('rs').onclick=function(){t=0;cur=-1;playing=true;pp.textContent='Pause'};
+requestAnimationFrame(tick)})();
+</script></body></html>
